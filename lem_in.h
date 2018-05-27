@@ -12,8 +12,7 @@ typedef struct		s_room
 	char			name;
 	int				y;
 	int				x;
-	t_room			*way;
-	t_list			*connection;
+	t_list			*connect;
 	int				status;
 	int				order;
 }					t_room;
@@ -39,7 +38,6 @@ typedef struct 		s_board
 t_room				*new_room(void);
 void				clear_room(void *r, size_t size);
 t_list				*obj_in_lst(void *obj);
-void				for_unlock_all_rooms(t_list *lst);
 
 /*
 **ants.c

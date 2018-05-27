@@ -9,8 +9,7 @@ t_room		*new_room(void)
 		room->name = '\0';
 		room->y = 0;
 		room->x = 0;
-		room->way = NULL;
-		room->connection = NULL;
+		room->connect = NULL;
 		room->status = 0;
 		room->order = 0;
 	}
@@ -24,7 +23,7 @@ void		clear_room(void *r, size_t size)
 
 	void(size);
 	room = (t_room *)r;
-	lst1 = room->connection;
+	lst1 = room->connect;
 	while (lst1)
 	{
 		lst2 = lst1->next;
@@ -41,15 +40,4 @@ t_list		*obj_in_lst(void *obj)
 	lst = ft_lstnew(NULL, 0);
 	lst->content = obj;
 	return (lst);
-}
-
-void		for_unlock_all_rooms(t_list *lst)
-{
-	t_room	*room;
-
-	if (!lst)
-		return;
-	room = (t_room *)lst->content;
-	if (room)
-		room->status ^= R_LOCK;
 }
