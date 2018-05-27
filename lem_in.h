@@ -5,7 +5,9 @@
 
 # define	R_START			1
 # define	R_END			2
-# define	R_LOCK			4
+# define	R_ALOCK			4
+# define	R_GLOCK			8
+# define	IS_LOCK(n)		((n) & R_ALOCK || (n) & R_GLOCK)
 
 typedef struct		s_room
 {
@@ -46,5 +48,11 @@ int					step_colony(t_list *lst);
 t_list				*get_colony(int num, t_room *start);
 void				clear_ant(void	*a, size_t size);
 
+/*
+**scout.c
+*/
+void				lock_room(t_room *locking);
+int					need_lock(t_room *check);
+void				number_rooms(t_room	*start);
 
 #endif

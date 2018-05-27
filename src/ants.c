@@ -35,7 +35,7 @@ static t_room	*get_way(int order, t_list *lst)
 		room = (t_room *)lst->content;
 		if (room->status & R_END)
 			return (room);
-		if (room->order == order + 1 && !(room->status & R_LOCK))
+		if (room->order >= order && !(IS_LOCK(room->status)))
 			return (room);
 		lst = lst->next;
 	}
@@ -52,11 +52,11 @@ static int		step_ant(t_ant *ant)
 			return (1);
 		if ((way = get_way(ant->location->order, ant->location->connect)))
 		{
-			ant->location->status ^= R_LOCK;
+			ant->location->status ^= R_ALOCK;
 			ant->location = way;
 			if (ant->location->status & R_END)
 				return (1);
-			ant->location->status |= R_LOCK;
+			ant->location->status |= R_ALOCK;
 		}
 	}
 	return (0);

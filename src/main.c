@@ -5,8 +5,8 @@ static void	process(void)
 	t_board		*board;
 
 	if ((board = (t_board *)malloc(sizeof(t_board))))
-	{#include "../lem_in.h"
-		
+	{
+
 		free(board);
 	}
 }
