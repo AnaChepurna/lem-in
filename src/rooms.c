@@ -34,11 +34,22 @@ void		clear_room(void *r, size_t size)
 	free(r);
 }
 
-t_list		*room_in_lst(t_room *room)
+t_list		*obj_in_lst(void *obj)
 {
 	t_list	*lst;
 
 	lst = ft_lstnew(NULL, 0);
-	lst->content = (void *)room;
+	lst->content = obj;
 	return (lst);
+}
+
+void		for_unlock_all_rooms(t_list *lst)
+{
+	t_room	*room;
+
+	if (!lst)
+		return;
+	room = (t_room *)lst->content;
+	if (room)
+		room->status ^= R_LOCK;
 }
