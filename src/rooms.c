@@ -1,14 +1,14 @@
 #include "../lem_in.h"
 
-t_room		*new_room(void)
+t_room		*new_room(char name, int x, int y)
 {
 	t_room *room;
 
 	if ((room = (t_room *)malloc(sizeof(t_room))))
 	{
-		room->name = '\0';
-		room->y = 0;
-		room->x = 0;
+		room->name = name;
+		room->y = y;
+		room->x = x;
 		room->connect = NULL;
 		room->status = 0;
 		room->order = 0;

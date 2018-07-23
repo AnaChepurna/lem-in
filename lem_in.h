@@ -37,7 +37,7 @@ typedef struct 		s_board
 /*
 **rooms.c
 */
-t_room				*new_room(void);
+t_room				*new_room(char name, int x, int y);
 void				clear_room(void *r, size_t size);
 t_list				*obj_in_lst(void *obj);
 
