@@ -55,4 +55,12 @@ void				lock_room(t_room *locking);
 int					need_lock(t_room *check);
 void				number_rooms(t_room	*start);
 
+/*
+**input.c
+*/
+int read_connections(int fd, s_board *board);
+int read_rooms(int fd, s_board *board);
+int read_ants(int fd, s_board *board);
+
+
 #endif
