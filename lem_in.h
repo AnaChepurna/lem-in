@@ -11,7 +11,7 @@
 
 typedef struct		s_room
 {
-	char			name;
+	char			*name;
 	int				y;
 	int				x;
 	t_list			*connect;

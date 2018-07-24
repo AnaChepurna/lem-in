@@ -15,19 +15,27 @@ int read_ants(int fd, s_board *board)
 	return res;
 }
 
-int parse_room(char *str, char *name, int *x, int *y)
+static int parse_room_name(char *str, char **name)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != ' ')
+		i++;
+	*name = ft_strsub(str, 0, i);
+	return (i);
+}
+
+static int parse_room(char *str, char **name, int *x, int *y)
 {
 	if (ft_strequ("##start", str))
-	{
-		name = 27;
-		return (0);
-	}
+		return (1);
 	if (ft_strequ("##end", str))
-	{
-		name = 127;
-		return (0);
-	}
-	return (1);
+		return (2);
+	if (ft_strnequ("#", str, 1))
+		return (3);
+
+	return (0);
 }
 
 int read_rooms(int fd, s_board *board)
@@ -35,7 +43,7 @@ int read_rooms(int fd, s_board *board)
 	char *str;
 	int se[2];
 	int xy[2];
-	char name;
+	char *name;
 
 	se[0] = 0;
 	se[1] = 0;
@@ -43,7 +51,7 @@ int read_rooms(int fd, s_board *board)
 	{
 		if (ft_strchr('-', str))
 			break;
-		if (parse_room(str, &name, &xy[0], &xy[1]))
+		if (!parse_room(str, &name, &xy[0], &xy[1]))
 			ft_lstadd(&board->rooms,
 				obj_in_lst(new_room(name, xy[0], xy[1])));
 	}
