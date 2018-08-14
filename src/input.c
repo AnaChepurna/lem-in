@@ -43,6 +43,7 @@ static char		*parse_name(char **str)
 	 	i++;
 	name = ft_strsub(*str, 0, i);
 	*str += i;
+	ft_putendl(name);
 	return (name);
 }
 
@@ -57,7 +58,7 @@ static int 		parse_coord(char **str)
 	res = ft_atoi(*str);
 	while (ft_isdigit(**str))
 		(*str)++;
-	if (**str != ' ' || !**str)
+	if (**str != ' ' && **str)
 		return (-1);
 	return (res);
 }
