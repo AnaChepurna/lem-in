@@ -1,20 +1,30 @@
 #include "../lem_in.h"
 
-static void	process(void)
+static int	process(void)
 {
 	t_board		*board;
+	int			error;
 
+	error = 0;
 	if ((board = (t_board *)malloc(sizeof(t_board))))
 	{
-
-		free(board);
+		if (!read_ants(1, board))
+			error = 1;
+		else
+		{
+			
+		}
 	}
+	else
+		error = 1;
+	return (error);
 }
 
 int			main(int c, char **v)
 {
 	(void)c;
 	(void)v;
-	process();
+	if (process())
+		ft_putendl(RED "ERROR" RESET);
 	return (0);
 }

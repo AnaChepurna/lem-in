@@ -1,17 +1,25 @@
 #include "../lem_in.h"
 
-int read_ants(int fd, s_board *board)
+int read_ants(int fd, t_board *board)
 {
 	char *str;
+	char *src;
 	int res;
 
-	get_next_line(fd, &str);
+	get_next_line(fd, &src);
+	ft_putendl(src);
+	str = src;
+	while (ft_isdigit(*str))
+		str++;
 	res = ft_atoi(str);
-	while (IS_NUMBER(*str) || IS_SPACE(*str))
+	while (ft_isdigit(*str))
+		str++;
+	while (IS_SPACE(*str))
 		str++;
 	if (*str)
-		return (0);
+		res = 0;
 	board->num = res;
+	free(src);
 	return res;
 }
 
@@ -26,7 +34,7 @@ static int parse_room_name(char *str, char **name)
 	return (i);
 }
 
-static int parse_room(char *str, char **name, int *x, int *y)
+static int parse_room(char *str, )
 {
 	if (ft_strequ("##start", str))
 		return (1);
@@ -38,27 +46,24 @@ static int parse_room(char *str, char **name, int *x, int *y)
 	return (0);
 }
 
-int read_rooms(int fd, s_board *board)
+int read_rooms(int fd, t_board *board)
 {
 	char *str;
-	int se[2];
-	int xy[2];
-	char *name;
+	t_room *room;
 
-	se[0] = 0;
-	se[1] = 0;
 	while (get_next_line(fd, &str) > 0)
 	{
+		room = NULL;
 		if (ft_strchr('-', str))
 			break;
-		if (!parse_room(str, &name, &xy[0], &xy[1]))
-			ft_lstadd(&board->rooms,
-				obj_in_lst(new_room(name, xy[0], xy[1])));
+
+		ft_lstadd(&board->rooms, obj_in_lst(room));
+		free(str);
 	}
-	return (se[0] && se[1] ? 1 : 0);
+	return (0);
 }
 
-int read_connections(int fd, s_board *board)
+int read_connections(int fd, t_board *board)
 {
 	return (0);
 }

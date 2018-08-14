@@ -16,7 +16,9 @@ NAME = lem_in
 INCL = lem_in.h
 SRC_DIR = src/
 FILES = main.c \
-		parse.c
+		input.c \
+		rooms.c \
+		scout.c
 SRC = $(addprefix $(SRC_DIR), $(FILES))
 OBJ = $(SRC:.c=.o)
 LIB = libft/libft.a
