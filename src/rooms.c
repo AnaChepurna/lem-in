@@ -1,6 +1,6 @@
 #include "../lem_in.h"
 
-t_room		*new_room(char name, int x, int y)
+t_room		*new_room(char *name, int x, int y)
 {
 	t_room *room;
 
@@ -13,6 +13,7 @@ t_room		*new_room(char name, int x, int y)
 		room->status = 0;
 		room->order = 0;
 	}
+	return (room);
 }
 
 void		clear_room(void *r, size_t size)
@@ -21,7 +22,7 @@ void		clear_room(void *r, size_t size)
 	t_list	*lst2;
 	t_room	*room;
 
-	void(size);
+	(void)size;
 	room = (t_room *)r;
 	lst1 = room->connect;
 	while (lst1)
@@ -30,6 +31,8 @@ void		clear_room(void *r, size_t size)
 		free(lst1);
 		lst1 = lst2;
 	}
+	if (room->name)
+		free(room->name);
 	free(r);
 }
 

@@ -20,7 +20,7 @@ int read_ants(int fd, t_board *board)
 	return res;
 }
 
-static int read_comment(char *str)
+int  read_comment(char *str)
 {
 	if (ft_strequ("##start", str))
 		return (R_START);
@@ -39,7 +39,7 @@ static char		*parse_name(char **str)
 	if (**str == 'L' || IS_SPACE(**str))
 		return (NULL);
 	i = 0;
-	while (!IS_SPACE(*str[i]))
+	while (!IS_SPACE((*str)[i]))
 		i++;
 	name = ft_strsub(*str, 0, i);
 	*str += i;
@@ -51,12 +51,12 @@ static int 		parse_coord(char **str)
 	int res;
 
 	if (**str == ' ')
-		*str++;
+		(*str)++;
 	else
 		return (-1);
 	res = ft_atoi(*str);
 	while (ft_isdigit(**str))
-		*str++;
+		(*str)++;
 	if (**str != ' ' || !**str)
 		return (-1);
 	return (res);
@@ -79,7 +79,9 @@ static t_room	*parse_room(char *str, int comment)
 		return (NULL);
 	}
 	room = new_room(name, x, y);
-	if (comment == 1);
+	if (comment > 0 && room)
+		room->status = comment;
+	return (room);
 }
 
 int read_rooms(int fd, t_board *board)
@@ -91,7 +93,7 @@ int read_rooms(int fd, t_board *board)
 	while (get_next_line(fd, &str) > 0)
 	{
 		room = NULL;
-		if (ft_strchr('-', str))
+		if (ft_strchr(str, '-'))
 			break;
 		if ((comment = read_comment(str)))
 		{
@@ -99,15 +101,20 @@ int read_rooms(int fd, t_board *board)
 			free(str);
 			get_next_line(fd, &str);
 		}
-		room = parse_room(str, comment);
-		ft_lstadd(&board->rooms, obj_in_lst(room));
+		if (!(room = parse_room(str, comment)))
+			return (1);
+		ft_lstadd(&(board->rooms), obj_in_lst(room));
 		ft_putendl(str);
 		free(str);
+		str = NULL;
 	}
-	return (0);
+	return (read_connections(fd, board, str));
 }
 
-int read_connections(int fd, t_board *board)
+int read_connections(int fd, t_board *board, char *str)
 {
+	(void)fd;
+	(void)board;
+	(void)str;
 	return (0);
 }
