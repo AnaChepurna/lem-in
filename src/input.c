@@ -39,8 +39,8 @@ static char		*parse_name(char **str)
 	if (**str == 'L' || IS_SPACE(**str))
 		return (NULL);
 	i = 0;
-	while (!IS_SPACE((*str)[i]))
-		i++;
+	while ((*str)[i] && !(IS_SPACE((*str)[i])))
+	 	i++;
 	name = ft_strsub(*str, 0, i);
 	*str += i;
 	return (name);
@@ -90,8 +90,10 @@ int read_rooms(int fd, t_board *board)
 	t_room *room;
 	int 	comment;
 
+	ft_putendl("read_rooms");
 	while (get_next_line(fd, &str) > 0)
 	{
+		ft_putendl("room loop");
 		room = NULL;
 		if (ft_strchr(str, '-'))
 			break;

@@ -10,9 +10,9 @@ static int	process(void)
 	{
 		if (!read_ants(1, board))
 			error = 1;
-		else
+		else if (!(error = read_rooms(1, board)))
 		{
-			
+			ft_putendl(GREEN "like it!" RESET);
 		}
 	}
 	else

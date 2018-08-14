@@ -12,7 +12,7 @@
 
 CC = gcc
 CFLAG = -Wall -Wextra -Werror
-NAME = lem_in
+NAME = lem-in
 INCL = lem_in.h
 SRC_DIR = src/
 FILES = main.c \
