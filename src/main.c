@@ -8,12 +8,10 @@ static int	process(void)
 	error = 0;
 	if ((board = (t_board *)malloc(sizeof(t_board))))
 	{
-		if (!read_ants(1, board))
+		if (!read_ants(0, board))
 			error = 1;
-		else if (!(error = read_rooms(1, board)))
-		{
-			ft_putendl(GREEN "like it!" RESET);
-		}
+		read_rooms(0, board);
+		print_rooms(board);
 	}
 	else
 		error = 1;

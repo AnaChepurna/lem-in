@@ -58,10 +58,12 @@ void				number_rooms(t_room	*start);
 /*
 **input.c
 */
-int 				read_connections(int fd, t_board *board, char *str);
-int 				read_rooms(int fd, t_board *board);
+void 				read_connections(int fd, t_board *board, char *str);
+void 				read_rooms(int fd, t_board *board);
 int 				read_ants(int fd, t_board *board);
 int 				read_comment(char *str);
 
+
+void print_rooms(t_board *board);
 
 #endif

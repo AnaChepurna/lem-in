@@ -44,3 +44,38 @@ t_list		*obj_in_lst(void *obj)
 	lst->content = obj;
 	return (lst);
 }
+
+
+//
+//
+//
+
+#include <stdio.h>
+
+void print_rooms(t_board *board)
+{
+	t_list *lst;
+	t_list *l;
+	t_room *room;
+	t_room *r;
+
+	lst = board->rooms;
+	while (lst)
+	{
+		room = lst->content;
+		l = room->connect;
+		if (room->status == R_START)
+			printf("START\n");
+		else if (room->status == R_END)
+			printf("END\n");
+		printf("%s, %i %i\n", room->name, room->x, room->y);
+		while (l)
+		{
+			r = l->content;
+			printf("%s; ", r->name);
+			l = l->next;
+		}
+		printf("\n--------\n");
+		lst = lst->next;
+	}
+}
