@@ -11,6 +11,11 @@ static int	process(void)
 		if (!read_ants(0, board))
 			error = 1;
 		read_rooms(0, board);
+		if (!(error = scout_start_end(board)))
+		{
+			board->start->order = 0;
+			number_rooms(board->start);
+		}
 		print_rooms(board);
 	}
 	else

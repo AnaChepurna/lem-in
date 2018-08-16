@@ -1,25 +1,25 @@
 #include "../lem_in.h"
 
-// void		number_rooms(t_room	*start)
-// {
-// 	t_list	*lst;
-// 	t_room	*room;
+void		number_rooms(t_room	*start)
+{
+	t_list	*lst;
+	t_room	*room;
 
-// 	lst = start->connect;
-// 	while (lst)
-// 	{
-// 		room = (t_room *)lst->content;
-// 		if (!(room->status & R_START) && !(room->status & R_END))
-// 		{
-// 			if (!room->order || room->order > start->order)
-// 			{
-// 				room->order = start->order + 1;
-// 				number_rooms(room);
-// 			}
-// 		}
-// 		lst = lst->next;
-// 	}
-// }
+	lst = start->connect;
+	while (lst)
+	{
+		room = (t_room *)lst->content;
+		if (!(room->status & R_START) && !(room->status & R_END))
+		{
+			if (room->order < 0 || room->order > start->order)
+			{
+				room->order = start->order + 1;
+				number_rooms(room);
+			}
+		}
+		lst = lst->next;
+	}
+}
 
 // int			need_lock(t_room *check)
 // {
@@ -56,3 +56,27 @@
 // 		lst = lst->next;
 // 	}
 // }
+
+int scout_start_end(t_board *board)
+{
+	t_list *lst;
+	t_room *room;
+
+	lst = board->rooms;
+	while (lst)
+	{
+		room = lst->content;
+		if (room->status == R_START && !board->start)
+			board->start = room;
+		else if (room->status == R_START && board->start)
+				return (2);
+		if (room->status == R_END && !board->end)
+			board->end = room;
+		else if (room->status == R_END && board->end)
+				return (2);
+		lst = lst->next;	
+	}
+	if (!board->end || !board->start)
+		return (2);
+	return (0);
+}

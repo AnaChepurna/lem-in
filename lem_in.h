@@ -54,6 +54,7 @@ void				clear_ant(void	*a, size_t size);
 void				lock_room(t_room *locking);
 int					need_lock(t_room *check);
 void				number_rooms(t_room	*start);
+int 				scout_start_end(t_board *board);
 
 /*
 **input.c

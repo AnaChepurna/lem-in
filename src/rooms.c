@@ -11,7 +11,7 @@ t_room		*new_room(char *name, int x, int y)
 		room->x = x;
 		room->connect = NULL;
 		room->status = 0;
-		room->order = 0;
+		room->order = -1;
 	}
 	return (room);
 }
@@ -69,6 +69,7 @@ void print_rooms(t_board *board)
 		else if (room->status == R_END)
 			printf("END\n");
 		printf("%s, %i %i\n", room->name, room->x, room->y);
+		printf("order is %i\n", room->order);
 		while (l)
 		{
 			r = l->content;
