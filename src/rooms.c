@@ -68,6 +68,8 @@ void print_rooms(t_board *board)
 			printf("START\n");
 		else if (room->status == R_END)
 			printf("END\n");
+		else
+			printf("road $%i\n", room->status);
 		printf("%s, %i %i\n", room->name, room->x, room->y);
 		printf("order is %i\n", room->order);
 		while (l)

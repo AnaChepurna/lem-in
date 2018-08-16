@@ -79,7 +79,7 @@ static t_room	*parse_room(char *str, int comment)
 		return (NULL);
 	}
 	room = new_room(name, x, y);
-	if (comment > 0 && room)
+	if (comment < -1 && room)
 		room->status = comment;
 	return (room);
 }

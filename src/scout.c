@@ -80,3 +80,48 @@ int scout_start_end(t_board *board)
 		return (2);
 	return (0);
 }
+
+static int mark_road(t_room *road, int status)
+{
+	t_room *next;
+	t_list *lst;
+
+	road->status = status;
+	lst = road->connect;
+	while (lst)
+	{
+		next = lst->content;
+		if (next->status == R_START)
+			return (1);
+		if (!next->status && next->order < road->order
+			&& mark_road(next, status))
+			break;
+		next = NULL;
+		lst = lst->next;
+	}
+	if (!next)
+	{
+		road->status = 0;
+		return (0);
+	}
+	return (1);
+}
+
+int		mark_roads(t_room *end)
+{
+	t_list *lst;
+	t_room *room;
+	int road_number;
+
+	road_number = 0;
+	lst = end->connect;
+	while (lst)
+	{
+		room = lst->content;
+		printf("order -- %i\n", room->order);
+		if (room->order > 0)
+			road_number += mark_road(room, room->order);
+		lst = lst->next;
+	}
+	return (road_number);
+}

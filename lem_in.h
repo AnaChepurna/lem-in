@@ -2,9 +2,10 @@
 # define LEM_IN_H
 
 # include "libft/libft.h"
+ #include <stdio.h>
 
-# define	R_START			1
-# define	R_END			2
+# define	R_START			-2
+# define	R_END			-3
 # define	R_ALOCK			4
 # define	R_GLOCK			8
 # define	IS_LOCK(n)		((n) & R_ALOCK || (n) & R_GLOCK)
@@ -66,5 +67,6 @@ int 				read_comment(char *str);
 
 
 void print_rooms(t_board *board);
+int		mark_roads(t_room *end);
 
 #endif

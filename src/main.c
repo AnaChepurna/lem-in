@@ -15,6 +15,7 @@ static int	process(void)
 		{
 			board->start->order = 0;
 			number_rooms(board->start);
+			printf("------- > %i\n", mark_roads(board->end));
 		}
 		print_rooms(board);
 	}
