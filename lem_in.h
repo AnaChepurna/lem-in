@@ -6,9 +6,6 @@
 
 # define	R_START			-2
 # define	R_END			-3
-# define	R_ALOCK			4
-# define	R_GLOCK			8
-# define	IS_LOCK(n)		((n) & R_ALOCK || (n) & R_GLOCK)
 
 typedef struct		s_room
 {
@@ -18,6 +15,7 @@ typedef struct		s_room
 	t_list			*connect;
 	int				status;
 	int				order;
+	int 			lock;
 }					t_room;
 
 typedef struct		s_ant
@@ -29,6 +27,7 @@ typedef struct		s_ant
 typedef struct 		s_board
 {
 	int				num;
+	int 			roads;
 	t_room			*start;
 	t_room			*end;
 	t_list			*ants;
@@ -45,7 +44,7 @@ t_list				*obj_in_lst(void *obj);
 /*
 **ants.c
 */
-int					step_colony(t_list *lst);
+int					step_colony(t_list *lst, t_board *board);
 t_list				*get_colony(int num, t_room *start);
 void				clear_ant(void	*a, size_t size);
 

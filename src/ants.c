@@ -26,52 +26,100 @@ t_list		*get_colony(int num, t_room *start)
 	return (lst);
 }
 
-static t_room	*get_way(int order, t_list *lst)
+static void print_ant(t_ant *ant)
 {
-	t_room	*room;
-
-	while (lst)
-	{
-		room = (t_room *)lst->content;
-		if (room->status & R_END)
-			return (room);
-		if (room->order >= order && !(IS_LOCK(room->status)))
-			return (room);
-		lst = lst->next;
-	}
-	return (NULL);
+	ft_putstr("L");
+	ft_putnbr(ant->number);
+	ft_putstr("-");
+	ft_putstr(ant->location->name);
+	ft_putstr(" ");
 }
 
-static int		step_ant(t_ant *ant)
+static void		start_ant(t_ant *ant, t_board *board)
 {
-	t_room	*way;
+	t_list *lst;
+	t_room *road;
+	t_room *room;
 
-	if (ant)
+	road = NULL;
+	lst = ant->location->connect;
+	while (lst)
 	{
-		if (ant->location->status & R_END)
-			return (1);
-		if ((way = get_way(ant->location->order, ant->location->connect)))
+		room = lst->content;
+		if (room->status <= board->num && !room->lock)
+			road = room;
+		lst = lst->next;
+	}
+	if (!road)
+	{
+		lst = ant->location->connect;
+		while (lst)
 		{
-			ant->location->status ^= R_ALOCK;
-			ant->location = way;
-			if (ant->location->status & R_END)
-				return (1);
-			ant->location->status |= R_ALOCK;
+			room = lst->content;
+			if (!road || room->status < road->status)
+				road = room;
+			lst = lst->next;
 		}
 	}
+	if (road && !road->lock)
+	{
+		board->num--;
+		ant->location = road;
+		ant->location->lock = 1;
+	}
+}
+
+static void     road_ant(t_ant *ant)
+{
+	t_list *lst;
+	t_room *room;
+
+	lst = ant->location->connect;
+	while (lst)
+	{
+		room = lst->content;
+		if (!room->lock && room->order > ant->location->order &&
+			room->status == ant->location->status)
+		{
+			ant->location->lock = 0;
+			ant->location = room;
+			ant->location->lock = 1;
+			break;
+		}
+		if (room->status == R_END)
+		{
+			ant->location->lock = 0;
+			ant->location = room;
+			break;
+		}
+		lst = lst->next;
+	}
+}
+
+static int		step_ant(t_ant *ant, t_board *board)
+{
+	if (ant->location->status == R_END)
+		return (1);
+	if (ant->location->status == R_START)
+		start_ant(ant, board);
+	else
+		road_ant(ant);
+	if (ant->location->status != R_START)
+		print_ant(ant);
+	if (ant->location->status == R_END)
+		return (1);
 	return (0);
 }
 
-int				step_colony(t_list *lst)
+int				step_colony(t_list *lst, t_board *board)
 {
 	int		status;
 
 	status = 1;
 	while (lst)
 	{
-		if (!step_ant((t_ant *)lst->content))
-			status = 0;
+		status = step_ant((t_ant *)lst->content, board);
 		lst = lst->next;
 	}
-	return (status)
+	return (status);
 }

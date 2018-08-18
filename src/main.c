@@ -15,9 +15,14 @@ static int	process(void)
 		{
 			board->start->order = 0;
 			number_rooms(board->start);
-			printf("------- > %i\n", mark_roads(board->end));
+			if (!(board->roads =  mark_roads(board->end)))
+				return (3);
+			printf("so get started\n");
+			board->ants = get_colony(board->num, board->start);
+			while (!step_colony(board->ants, board))
+				ft_putstr("\n");
 		}
-		print_rooms(board);
+		//print_rooms(board);
 	}
 	else
 		error = 1;

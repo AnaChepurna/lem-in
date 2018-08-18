@@ -12,6 +12,7 @@ t_room		*new_room(char *name, int x, int y)
 		room->connect = NULL;
 		room->status = 0;
 		room->order = -1;
+		room->lock = 0;
 	}
 	return (room);
 }

@@ -18,7 +18,8 @@ SRC_DIR = src/
 FILES = main.c \
 		input.c \
 		rooms.c \
-		scout.c
+		scout.c \
+		ants.c
 SRC = $(addprefix $(SRC_DIR), $(FILES))
 OBJ = $(SRC:.c=.o)
 LIB = libft/libft.a
