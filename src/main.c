@@ -16,7 +16,7 @@ static int	process(void)
 			board->start->order = 0;
 			number_rooms(board->start);
 			if (!(board->roads =  mark_roads(board->end)))
-				return (3);
+				return (4);
 			board->ants = get_colony(board->num, board->start);
 			while (!step_colony(board->ants, board))
 				ft_putstr("\n");
@@ -32,8 +32,18 @@ static void print_error(int error)
 {
 	if (error == 1)
 		ft_putendl(RED "ERROR : ants not found" RESET);
-	else if (error == 2)
-		ft_putendl(RED "ERROR : " RESET);
+	else if (error == 5)
+		ft_putendl(RED "ERROR : memory problem" RESET);
+	else if (error == 4)
+		ft_putendl(RED "ERROR : there is no ways to end" RESET);
+	else if (error == 6)
+		ft_putendl(RED "ERROR : more than 1 start detected" RESET);
+	else if (error == 7)
+		ft_putendl(RED "ERROR : more than 1 end detected" RESET);
+	else if (error == 8)
+		ft_putendl(RED "ERROR : end not found" RESET);
+	else if (error == 9)
+		ft_putendl(RED "ERROR : start not found" RESET);
 }
 
 int			main(int c, char **v)
