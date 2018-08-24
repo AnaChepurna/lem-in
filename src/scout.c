@@ -21,42 +21,6 @@ void		number_rooms(t_room	*start)
 	}
 }
 
-// int			need_lock(t_room *check)
-// {
-// 	t_list	*lst;
-// 	t_room	*room;
-
-// 	lst = room->connect;
-// 	while (lst)
-// 	{
-// 		room = (t_room *)lst->content;
-// 		if (room->status & R_END)
-// 			return (0);
-// 		if (!(room->status & R_GLOCK) && room->order >= check->status)
-// 			return (0);
-// 		lst = lst->next;
-// 	}
-// 	return (1);
-// }
-
-// void		lock_room(t_room *locking)
-// {
-// 	t_list	*lst;
-// 	t_room	*room;
-
-// 	if (!locking)
-// 		return;
-// 	locking->status |= R_GLOCK;
-// 	lst = locking->connect;
-// 	while (lst)
-// 	{
-// 		room = (t_room *)lst->content;
-// 		if (need_lock(room))
-// 			lock_room(room);
-// 		lst = lst->next;
-// 	}
-// }
-
 int scout_start_end(t_board *board)
 {
 	t_list *lst;
@@ -107,6 +71,18 @@ static int mark_road(t_room *road, int status)
 	return (1);
 }
 
+int 	sort_roads(t_list *al, t_list *bl)
+{
+	t_room *a;
+	t_room *b;
+
+	a = al->content;
+	b = bl->content;
+	if (a->order > b->order)
+		return (1);
+	return (0);
+}
+
 int		mark_roads(t_room *end)
 {
 	t_list *lst;
@@ -115,10 +91,10 @@ int		mark_roads(t_room *end)
 
 	road_number = 0;
 	lst = end->connect;
+	sort_lst(lst, sort_roads);
 	while (lst)
 	{
 		room = lst->content;
-		printf("order -- %i\n", room->order);
 		if (room->order > 0)
 			road_number += mark_road(room, room->order);
 		lst = lst->next;

@@ -17,23 +17,29 @@ static int	process(void)
 			number_rooms(board->start);
 			if (!(board->roads =  mark_roads(board->end)))
 				return (3);
-			printf("so get started\n");
 			board->ants = get_colony(board->num, board->start);
 			while (!step_colony(board->ants, board))
 				ft_putstr("\n");
+			ft_putstr("\n");
 		}
-		//print_rooms(board);
 	}
 	else
-		error = 1;
+		error = 5;
 	return (error);
+}
+
+static void print_error(int error)
+{
+	if (error == 1)
+		ft_putendl(RED "ERROR : ants not found" RESET);
+	else if (error == 2)
+		ft_putendl(RED "ERROR : " RESET);
 }
 
 int			main(int c, char **v)
 {
 	(void)c;
 	(void)v;
-	if (process())
-		ft_putendl(RED "ERROR" RESET);
+	print_error(process());
 	return (0);
 }
