@@ -64,8 +64,6 @@ void 				read_rooms(int fd, t_board *board);
 int 				read_ants(int fd, t_board *board);
 int 				read_comment(char *str);
 
-
-void print_rooms(t_board *board);
 int		mark_roads(t_room *end);
 
 #endif

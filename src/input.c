@@ -84,11 +84,17 @@ static t_room	*parse_room(char *str, int comment)
 	return (room);
 }
 
+static void print_and_free(char *str)
+{
+	ft_putendl(str);
+	free(str);
+}
+
 void read_rooms(int fd, t_board *board)
 {
 	char *str;
 	t_room *room;
-	int 	comment;
+	int 	comment[2];
 
 	str = NULL;
 	while (get_next_line(fd, &str) > 0)
@@ -96,17 +102,17 @@ void read_rooms(int fd, t_board *board)
 		room = NULL;
 		if (ft_strchr(str, '-'))
 			break;
-		if ((comment = read_comment(str)))
+		comment[1] = 0;
+		while ((comment[0] = read_comment(str)))
 		{
-			ft_putendl(str);
-			free(str);
+			comment[1] = comment[0] < -1 ? comment[0] : comment [1];
+			print_and_free(str);
 			get_next_line(fd, &str);
 		}
-		if (!(room = parse_room(str, comment)))
+		if (!(room = parse_room(str, comment[1])))
 			return ;
 		ft_lstadd(&(board->rooms), obj_in_lst(room));
-		ft_putendl(str);
-		free(str);
+		print_and_free(str);
 		str = NULL;
 	}
 	read_connections(fd, board, str);
