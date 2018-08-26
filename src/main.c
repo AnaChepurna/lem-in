@@ -8,6 +8,7 @@ static int	process(void)
 	error = 0;
 	if ((board = (t_board *)malloc(sizeof(t_board))))
 	{
+		board->rooms = NULL;
 		if (!read_ants(0, board))
 			error = 1;
 		read_rooms(0, board);
@@ -22,6 +23,7 @@ static int	process(void)
 				ft_putstr("\n");
 			ft_putstr("\n");
 		}
+		print_rooms(board->rooms);
 	}
 	else
 		error = 5;

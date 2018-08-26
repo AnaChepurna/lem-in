@@ -16,6 +16,7 @@ typedef struct		s_room
 	int				status;
 	int				order;
 	int 			lock;
+	int				ways;
 }					t_room;
 
 typedef struct		s_ant
@@ -64,6 +65,7 @@ void 				read_rooms(int fd, t_board *board);
 int 				read_ants(int fd, t_board *board);
 int 				read_comment(char *str);
 
-int		mark_roads(t_room *end);
+int					mark_roads(t_room *end);
+void print_rooms(t_list *start);
 
 #endif

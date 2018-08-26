@@ -33,11 +33,17 @@ int scout_start_end(t_board *board)
 		if (room->status == R_START && !board->start)
 			board->start = room;
 		else if (room->status == R_START && board->start)
-				return (6);
+		{
+			printf("ohhh\n");
+			return (6);
+		}
 		if (room->status == R_END && !board->end)
 			board->end = room;
 		else if (room->status == R_END && board->end)
-				return (7);
+		{
+			printf("yoy\n");
+			return (7);
+		}
 		lst = lst->next;	
 	}
 	if (!board->end)

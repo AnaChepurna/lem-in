@@ -45,3 +45,34 @@ t_list		*obj_in_lst(void *obj)
 	lst->content = obj;
 	return (lst);
 }
+
+//
+//
+//
+//
+
+void print_room(t_room *room)
+{
+	printf("//////%s %i %i\n", room->name, room->x, room->y);
+	if (room->status == R_START)
+		printf("start\n");
+	else if (room->status == R_END)
+		printf("end\n");
+	else printf("status %i\n", room->status);
+	printf("order %i\n", room->order);
+	printf("is lock ? %i\n", room->lock);
+}
+
+void print_rooms(t_list *rooms)
+{
+	t_room *room;
+	t_list *lst;
+
+	lst = rooms;
+	while (lst)
+	{
+		room = lst->content;
+		print_room(room);
+		lst = lst->next;
+	}
+}
