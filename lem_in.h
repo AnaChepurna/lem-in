@@ -14,9 +14,9 @@ typedef struct		s_room
 	int				x;
 	t_list			*connect;
 	int				status;
+	t_list			*commited;
 	int				order;
 	int 			lock;
-	int				ways;
 }					t_room;
 
 typedef struct		s_ant
@@ -68,5 +68,14 @@ int 				read_comment(char *str);
 int					mark_roads(t_room *end);
 void print_room(t_room *room);
 void print_rooms(t_list *start);
+
+/*
+**branch.c
+*/
+
+// void	delete_commit(unsigned int status, t_room *room);
+void	add_commit(unsigned int status, t_room *road, t_room *room);
+int	is_commited(t_room *road, t_room *room);
+void	clear_commits(t_room *room, t_room *flag);
 
 #endif

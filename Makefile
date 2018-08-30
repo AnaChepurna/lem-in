@@ -19,7 +19,8 @@ FILES = main.c \
 		input.c \
 		rooms.c \
 		scout.c \
-		ants.c
+		ants.c \
+		branch.c
 SRC = $(addprefix $(SRC_DIR), $(FILES))
 OBJ = $(SRC:.c=.o)
 LIB = libft/libft.a

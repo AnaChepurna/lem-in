@@ -53,29 +53,33 @@ int scout_start_end(t_board *board)
 	return (0);
 }
 
-static int mark_road(t_room *road, int status)
+static int mark_road(t_room *road, t_room *flag, int status)
 {
 	t_room *next;
 	t_list *lst;
 
-	road->status = status;
+	//road->status = status;
+	add_commit(status, flag, road);
 	lst = road->connect;
 	while (lst)
 	{
 		next = lst->content;
 		if (next->status == R_START)
 			return (1);
-		if (!next->status && next->order < road->order
-			&& mark_road(next, status))
-			break;
-		next = NULL;
+		if (//!next->status && 
+			next->order < road->order
+			&& mark_road(next, flag, status))
+			(void)status;
+			//break;
+		//next = NULL;
 		lst = lst->next;
 	}
-	if (!next)
-	{
-		road->status = 0;
-		return (0);
-	}
+	// if (!next)
+	// {
+	// 	delete_commit(status, road);
+	// 	//road->status = 0;
+	// 	return (0);
+	// }
 	return (1);
 }
 
@@ -99,12 +103,19 @@ int		mark_roads(t_room *end)
 
 	road_number = 0;
 	lst = end->connect;
-	sort_lst(lst, sort_roads);
+	sort_lst(lst, &sort_roads);
 	while (lst)
 	{
 		room = lst->content;
 		if (room->order > 0)
-			road_number += mark_road(room, room->order);
+			road_number += mark_road(room, room, room->order);
+		lst = lst->next;
+	}
+	lst = end->connect;
+	while (lst)
+	{
+		room = lst->content;
+		clear_commits(room, room);
 		lst = lst->next;
 	}
 	return (road_number);

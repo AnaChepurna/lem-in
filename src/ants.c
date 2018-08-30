@@ -85,7 +85,7 @@ static void     road_ant(t_ant *ant)
 			ant->location->lock = 0;
 			ant->location = room;
 			ant->location->lock = 1;
-			printf(GREEN "step\n" RESET);
+			//printf(GREEN "step\n" RESET);
 			return ;
 		}
 		if (room->status == R_END)
@@ -96,17 +96,17 @@ static void     road_ant(t_ant *ant)
 		}
 		lst = lst->next;
 	}
-	printf( YELLOW "stay\n" RESET);
+	//printf( YELLOW "stay\n" RESET);
 }
 
 static int		step_ant(t_ant *ant, t_board *board)
 {
 	if (ant->location->status == R_END)
 		return (1);
-	printf(MAGENTA"\nant and location\n" RESET);
-	print_ant(ant);
-	print_room(ant->location);
-	printf(GREEN"\n?????????\n" RESET);
+	// printf(MAGENTA"\nant and location\n" RESET);
+	// print_ant(ant);
+	// print_room(ant->location);
+	// printf(GREEN"\n?????????\n" RESET);
 
 	if (ant->location->status == R_START)
 		start_ant(ant, board);
@@ -114,12 +114,12 @@ static int		step_ant(t_ant *ant, t_board *board)
 		road_ant(ant);
 	if (ant->location->status != R_START)
 	{
-		print_room(ant->location);
+		//print_room(ant->location);
 		print_ant(ant);
 	}
 	else
 		return (-1);
-	printf(RED "\n-------------\n" RESET);
+	// printf(RED "\n-------------\n" RESET);
 	if (ant->location->status == R_END)
 		return (1);
 	return (0);

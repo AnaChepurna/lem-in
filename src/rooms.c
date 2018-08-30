@@ -53,12 +53,12 @@ t_list		*obj_in_lst(void *obj)
 
 void print_room(t_room *room)
 {
-	printf("//////%s %i %i\n", room->name, room->x, room->y);
+	printf("//////\n%s %i %i\n", room->name, room->x, room->y);
 	if (room->status == R_START)
 		printf("start\n");
 	else if (room->status == R_END)
 		printf("end\n");
-	else printf("status %i\n", room->status);
+	//else printf("status %i\n", room->status);
 	printf("order %i\n", room->order);
 	printf("is lock ? %i\n", room->lock);
 	printf("connections: ");
@@ -69,6 +69,15 @@ void print_room(t_room *room)
 		printf("%s, ", r->name);
 		lst = lst->next;
 	}
+	lst = room->commited;
+	printf("commited: ");
+	while (lst)
+	{
+		t_room *r = lst->content;
+		printf("%s(%zi), ",r->name, lst->content_size);
+		lst = lst->next;
+	}
+	printf("\n");
 }
 
 void print_rooms(t_list *rooms)
