@@ -20,7 +20,11 @@ static int	process(void)
 				return (4);
 			board->ants = get_colony(board->num, board->start);
 			while (!step_colony(board->ants, board))
+			{
+				printf("!!!!!!\n");
+				sleep(5);
 				ft_putstr("\n");
+			}
 			ft_putstr("\n");
 		}
 		print_rooms(board->rooms);

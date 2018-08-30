@@ -46,7 +46,8 @@ static void		start_ant(t_ant *ant, t_board *board)
 	while (lst)
 	{
 		room = lst->content;
-		if (room->status <= board->num && !room->lock)
+		if (room->status <= board->num && !room->lock &&
+			room->status)
 			road = room;
 		lst = lst->next;
 	}
@@ -56,7 +57,7 @@ static void		start_ant(t_ant *ant, t_board *board)
 		while (lst)
 		{
 			room = lst->content;
-			if (!road || room->status < road->status)
+			if (room->status && (!road || room->status < road->status))
 				road = room;
 			lst = lst->next;
 		}
@@ -84,28 +85,41 @@ static void     road_ant(t_ant *ant)
 			ant->location->lock = 0;
 			ant->location = room;
 			ant->location->lock = 1;
-			break;
+			printf(GREEN "step\n" RESET);
+			return ;
 		}
 		if (room->status == R_END)
 		{
 			ant->location->lock = 0;
 			ant->location = room;
-			break;
+			return ;
 		}
 		lst = lst->next;
 	}
+	printf( YELLOW "stay\n" RESET);
 }
 
 static int		step_ant(t_ant *ant, t_board *board)
 {
 	if (ant->location->status == R_END)
 		return (1);
+	printf(MAGENTA"\nant and location\n" RESET);
+	print_ant(ant);
+	print_room(ant->location);
+	printf(GREEN"\n?????????\n" RESET);
+
 	if (ant->location->status == R_START)
 		start_ant(ant, board);
 	else
 		road_ant(ant);
 	if (ant->location->status != R_START)
+	{
+		print_room(ant->location);
 		print_ant(ant);
+	}
+	else
+		return (-1);
+	printf(RED "\n-------------\n" RESET);
 	if (ant->location->status == R_END)
 		return (1);
 	return (0);
@@ -119,6 +133,8 @@ int				step_colony(t_list *lst, t_board *board)
 	while (lst)
 	{
 		status = step_ant((t_ant *)lst->content, board);
+		if (status == -1)
+			return (0);
 		lst = lst->next;
 	}
 	return (status);

@@ -61,6 +61,14 @@ void print_room(t_room *room)
 	else printf("status %i\n", room->status);
 	printf("order %i\n", room->order);
 	printf("is lock ? %i\n", room->lock);
+	printf("connections: ");
+	t_list *lst = room->connect;
+	while (lst)
+	{
+		t_room *r = lst->content;
+		printf("%s, ", r->name);
+		lst = lst->next;
+	}
 }
 
 void print_rooms(t_list *rooms)

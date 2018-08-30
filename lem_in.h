@@ -66,6 +66,7 @@ int 				read_ants(int fd, t_board *board);
 int 				read_comment(char *str);
 
 int					mark_roads(t_room *end);
+void print_room(t_room *room);
 void print_rooms(t_list *start);
 
 #endif
