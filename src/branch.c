@@ -18,6 +18,8 @@ void	add_commit(unsigned int status, t_room *road, t_room *room)
 {
 	t_list *new;
 
+	if (is_commited(road, room))
+		return ;
 	new = ft_lstnew(NULL, 0);
 	new->content = road;
 	new->content_size = status;

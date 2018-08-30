@@ -60,12 +60,12 @@ static int mark_road(t_room *road, t_room *flag, int status)
 
 	//road->status = status;
 	add_commit(status, flag, road);
+	if (road->status == R_START)
+			return (1);
 	lst = road->connect;
 	while (lst)
 	{
 		next = lst->content;
-		if (next->status == R_START)
-			return (1);
 		if (//!next->status && 
 			next->order < road->order
 			&& mark_road(next, flag, status))

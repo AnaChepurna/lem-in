@@ -19,15 +19,16 @@ static int	process(void)
 			if (!(board->roads =  mark_roads(board->end)))
 				return (4);
 			board->ants = get_colony(board->num, board->start);
-			// while (!step_colony(board->ants, board))
-			// {
-			// 	// printf("!!!!!!\n");
-			// 	// sleep(5);
-			// 	ft_putstr("\n");
-			// }
-			// ft_putstr("\n");
+			ft_putstr("\n");
+			while (!step_colony(board->ants, board))
+			{
+				// printf("!!!!!!\n");
+				sleep(1);
+				ft_putstr("\n");
+			}
+			ft_putstr("\n");
 		}
-		print_rooms(board->rooms);
+		//print_rooms(board->rooms);
 	}
 	else
 		error = 5;
