@@ -77,7 +77,7 @@ static int		search_room(t_ant *ant, t_board *board, t_room *road)
 	return (0);
 }
 
-static void		start_ant(t_ant *ant, t_board *board)
+static int		start_ant(t_ant *ant, t_board *board)
 {
 	t_list *lst;
 	t_room *road;
@@ -90,7 +90,7 @@ static void		start_ant(t_ant *ant, t_board *board)
 			break;
 		road = lst->content;
 		if (search_room(ant, board, road))
-			return ;
+			return (1);
 		lst = lst->next;
 	}
 	lst = ant->location->commited;
@@ -101,9 +101,10 @@ static void		start_ant(t_ant *ant, t_board *board)
 			break ;
 		road = lst->content;
 		if (search_room(ant, board, road))
-			return ;
+			return (1);
 		lst = lst->next;
 	}
+	return (0);
 
 	// road = NULL;
 	// lst = ant->location->connect;
@@ -173,10 +174,9 @@ static int		step_ant(t_ant *ant, t_board *board)
 	// printf(GREEN"\n?????????\n" RESET);
 
 	// if (ant->location->status == R_START)
-		start_ant(ant, board);
 	// else
 	// 	road_ant(ant);
-	if (ant->location->status != R_START)
+	if (start_ant(ant, board) && ant->location->status != R_START)
 	{
 		//print_room(ant->location);
 		print_ant(ant);
