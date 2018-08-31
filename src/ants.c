@@ -191,15 +191,18 @@ static int		step_ant(t_ant *ant, t_board *board)
 
 int				step_colony(t_list *lst, t_board *board)
 {
-	int		status;
+	static int	num = 0;
+	int status;
 
-	status = 1;
+	if (!num)
+		num = board->num;
+	status = 0;
 	while (lst)
 	{
-		status = step_ant((t_ant *)lst->content, board);
+		status += step_ant((t_ant *)lst->content, board);
 		if (status == -1)
 			return (0);
 		lst = lst->next;
 	}
-	return (status);
+	return (status == num);
 }
