@@ -86,7 +86,7 @@ static void		start_ant(t_ant *ant, t_board *board)
 	lst = ant->location->commited;
 	while (lst)
 	{
-		if ((int)lst->content_size - (int)board->start->commited->content_size > board->num)
+		if ((int)lst->content_size > board->num)
 			break;
 		road = lst->content;
 		if (search_room(ant, board, road))
