@@ -15,7 +15,7 @@ static int	process(t_board *board)
 			board->start->order = 0;
 			number_rooms(board->start);
 			mark_roads(board->end);
-			//print_rooms(board->rooms);
+			print_rooms(board->rooms);
 			if (!board->end->commited)
 				return (4);
 			board->ants = get_colony(board->num, board->start);

@@ -66,7 +66,8 @@ static int		search_room(t_ant *ant, t_board *board, t_room *road)
 	while (lst1)
 	{
 		room = lst1->content;
-		if (!room->lock && room->status != R_START && is_commited(road, room))
+		if (!room->lock && room->status != R_START && 
+			room->order > ant->location->order && is_commited(road, room))
 		{
 			paste_room(ant, board, room);
 			return (1);
