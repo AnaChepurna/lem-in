@@ -66,9 +66,9 @@ void 				read_rooms(int fd, t_board *board);
 int 				read_ants(int fd, t_board *board);
 int 				read_comment(char *str);
 
-void					mark_roads(t_room *end);
-void print_room(t_room *room);
-void print_rooms(t_list *start);
+void				mark_roads(t_room *end);
+void				print_room(t_room *room);
+void				print_rooms(t_list *start);
 
 /*
 **branch.c

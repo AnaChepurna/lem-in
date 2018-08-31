@@ -1,12 +1,11 @@
 #include "../lem_in.h"
 
-static int	process(void)
+static int	process(t_board *board)
 {
-	t_board		*board;
 	int			error;
 
 	error = 0;
-	if ((board = new_board()))
+	if (board)
 	{
 		if (!read_ants(0, board))
 			error = 1;
@@ -16,6 +15,7 @@ static int	process(void)
 			board->start->order = 0;
 			number_rooms(board->start);
 			mark_roads(board->end);
+			//print_rooms(board->rooms);
 			if (!board->end->commited)
 				return (4);
 			board->ants = get_colony(board->num, board->start);
@@ -28,8 +28,6 @@ static int	process(void)
 			}
 			ft_putstr("\n");
 		}
-		clear_board(&board);
-		//print_rooms(board->rooms);
 	}
 	else
 		error = 5;
@@ -56,8 +54,12 @@ static void print_error(int error)
 
 int			main(int c, char **v)
 {
+	t_board *board;
+
 	(void)c;
 	(void)v;
-	print_error(process());
+	board = new_board();
+	print_error(process(board));
+	clear_board(&board);
 	return (0);
 }

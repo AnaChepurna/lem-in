@@ -112,6 +112,7 @@ void		mark_roads(t_room *end)
 	while (lst)
 	{
 		room = lst->content;
+		//printf("%s to clear commits\n", room->name );
 		clear_commits(room, room);
 		lst = lst->next;
 	}

@@ -82,6 +82,8 @@ void	clear_commits(t_room *room, t_room *flag)
 		r = lst->content;
 		if (r->status == R_START)
 			return ;
+		if (r->status == R_END)
+			refresh_commits(room, flag);
 		if (r->order < room->order &&
 		r->status != R_END && is_commited(flag, r))
 		{

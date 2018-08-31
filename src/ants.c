@@ -66,7 +66,7 @@ static int		search_room(t_ant *ant, t_board *board, t_room *road)
 	while (lst1)
 	{
 		room = lst1->content;
-		if (!room->lock && is_commited(road, room))
+		if (!room->lock && room->status != R_START && is_commited(road, room))
 		{
 			paste_room(ant, board, room);
 			return (1);
@@ -85,7 +85,7 @@ static void		start_ant(t_ant *ant, t_board *board)
 	lst = ant->location->commited;
 	while (lst)
 	{
-		if ((int)lst->content_size - 1 > board->num)
+		if ((int)lst->content_size - (int)board->start->commited->content_size > board->num)
 			break;
 		road = lst->content;
 		if (search_room(ant, board, road))
@@ -103,6 +103,7 @@ static void		start_ant(t_ant *ant, t_board *board)
 			return ;
 		lst = lst->next;
 	}
+
 	// road = NULL;
 	// lst = ant->location->connect;
 	// while (lst)
