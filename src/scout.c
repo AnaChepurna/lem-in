@@ -53,7 +53,7 @@ int scout_start_end(t_board *board)
 	return (0);
 }
 
-static int mark_road(t_room *road, t_room *flag, int status)
+static void mark_road(t_room *road, t_room *flag, int status)
 {
 	t_room *next;
 	t_list *lst;
@@ -61,15 +61,14 @@ static int mark_road(t_room *road, t_room *flag, int status)
 	//road->status = status;
 	add_commit(status, flag, road);
 	if (road->status == R_START)
-			return (1);
+			return ;
 	lst = road->connect;
 	while (lst)
 	{
 		next = lst->content;
 		if (//!next->status && 
-			next->order < road->order
-			&& mark_road(next, flag, status))
-			(void)status;
+			next->order < road->order )
+			mark_road(next, flag, status);
 			//break;
 		//next = NULL;
 		lst = lst->next;
@@ -80,7 +79,7 @@ static int mark_road(t_room *road, t_room *flag, int status)
 	// 	//road->status = 0;
 	// 	return (0);
 	// }
-	return (1);
+	return ;
 }
 
 int 	sort_roads(t_list *al, t_list *bl)
@@ -95,20 +94,18 @@ int 	sort_roads(t_list *al, t_list *bl)
 	return (0);
 }
 
-int		mark_roads(t_room *end)
+void		mark_roads(t_room *end)
 {
 	t_list *lst;
 	t_room *room;
-	int road_number;
 
-	road_number = 0;
 	lst = end->connect;
 	sort_lst(lst, &sort_roads);
 	while (lst)
 	{
 		room = lst->content;
 		if (room->order > 0)
-			road_number += mark_road(room, room, room->order);
+			mark_road(room, room, room->order);
 		lst = lst->next;
 	}
 	lst = end->connect;
@@ -118,5 +115,4 @@ int		mark_roads(t_room *end)
 		clear_commits(room, room);
 		lst = lst->next;
 	}
-	return (road_number);
 }

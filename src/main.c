@@ -6,9 +6,8 @@ static int	process(void)
 	int			error;
 
 	error = 0;
-	if ((board = (t_board *)malloc(sizeof(t_board))))
+	if ((board = new_board()))
 	{
-		board->rooms = NULL;
 		if (!read_ants(0, board))
 			error = 1;
 		read_rooms(0, board);
@@ -16,7 +15,8 @@ static int	process(void)
 		{
 			board->start->order = 0;
 			number_rooms(board->start);
-			if (!(board->roads =  mark_roads(board->end)))
+			mark_roads(board->end);
+			if (!board->end->commited)
 				return (4);
 			board->ants = get_colony(board->num, board->start);
 			ft_putstr("\n");
@@ -28,6 +28,7 @@ static int	process(void)
 			}
 			ft_putstr("\n");
 		}
+		clear_board(&board);
 		//print_rooms(board->rooms);
 	}
 	else

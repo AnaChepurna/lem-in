@@ -32,6 +32,13 @@ void		clear_room(void *r, size_t size)
 		free(lst1);
 		lst1 = lst2;
 	}
+	lst1 = room->commited;
+	while (lst1)
+	{
+		lst2 = lst1->next;
+		free(lst1);
+		lst1 = lst2;
+	}
 	if (room->name)
 		free(room->name);
 	free(r);
@@ -44,6 +51,29 @@ t_list		*obj_in_lst(void *obj)
 	lst = ft_lstnew(NULL, 0);
 	lst->content = obj;
 	return (lst);
+}
+
+t_board *new_board(void)
+{
+	t_board *res;
+
+	if ((res = (t_board *)malloc(sizeof(t_board))))
+	{
+		res->num = 0;
+		res->start = NULL;
+		res->end = NULL;
+		res->ants = NULL;
+		res->rooms = NULL;
+	}
+	return (res);
+}
+
+void	clear_board(t_board **board)
+{
+	ft_lstdel(&(*board)->rooms, &clear_room);
+	ft_lstdel(&(*board)->ants, &clear_ant);
+	free(*board);
+	*board = NULL;
 }
 
 //
