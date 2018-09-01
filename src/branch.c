@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   branch.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: achepurn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/01 13:53:26 by achepurn          #+#    #+#             */
+/*   Updated: 2018/09/01 13:53:29 by achepurn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../lem_in.h"
 
-int	is_commited(t_room *road, t_room *room)
+int			is_commited(t_room *road, t_room *room)
 {
 	t_list	*lst;
 
@@ -16,7 +28,7 @@ int	is_commited(t_room *road, t_room *room)
 	return (0);
 }
 
-void	add_commit(unsigned int status, t_room *road, t_room *room)
+void		add_commit(unsigned int status, t_room *road, t_room *room)
 {
 	t_list	*new;
 
@@ -28,13 +40,13 @@ void	add_commit(unsigned int status, t_room *road, t_room *room)
 	ft_lstaddend(&room->commited, new);
 }
 
-static void refresh_commits(t_room *road, t_room *flag)
+static void	refresh_commits(t_room *road, t_room *flag)
 {
 	t_list	*lst;
 	t_list	*lst1;
 
 	lst = road->commited;
-	while(lst)
+	while (lst)
 	{
 		lst1 = lst;
 		lst = lst->next;
@@ -44,7 +56,7 @@ static void refresh_commits(t_room *road, t_room *flag)
 	add_commit(flag->order, flag, road);
 }
 
-void	clear_commits(t_room *room, t_room *flag)
+void		clear_commits(t_room *room, t_room *flag)
 {
 	t_list	*lst;
 	t_room	*r;
@@ -73,7 +85,7 @@ void	clear_commits(t_room *room, t_room *flag)
 		refresh_commits(road, flag);
 }
 
-void	clear_unconnected(t_room *room, t_room *flag)
+void		clear_unconnected(t_room *room, t_room *flag)
 {
 	t_list	*lst;
 	t_list	*lst1;
@@ -85,19 +97,19 @@ void	clear_unconnected(t_room *room, t_room *flag)
 	while (lst)
 	{
 		r = lst->content;
-		if (r && r->status != R_END && r->order < room->order && is_commited(flag, r))
+		if (r && r->status != R_END && r->order < room->order &&
+			is_commited(flag, r) && commited++)
 		{
-			if (commited++)
+			lst1 = r->commited;
+			while (lst1)
 			{
-				lst1 = r->commited;
-				while (lst1)
-				{
-					if (lst1->content == flag)
-						lst1->content = NULL;
-					lst1 = lst1->next;
-				}
+				if (lst1->content == flag)
+					lst1->content = NULL;
+				lst1 = lst1->next;
 			}
 		}
+		if (r && r->order < room->order)
+			clear_unconnected(r, flag);
 		lst = lst->next;
 	}
 }

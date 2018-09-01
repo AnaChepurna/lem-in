@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: achepurn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/01 13:53:56 by achepurn          #+#    #+#             */
+/*   Updated: 2018/09/01 13:53:58 by achepurn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../lem_in.h"
 
 static int	process(t_board *board)
@@ -12,20 +24,14 @@ static int	process(t_board *board)
 		read_rooms(0, board);
 		if (!(error = scout_start_end(board)))
 		{
-			board->start->order = 0;
 			number_rooms(board->start);
 			mark_roads(board->end);
-			print_rooms(board->rooms);
 			if (!board->end->commited)
 				return (4);
 			board->ants = get_colony(board->num, board->start);
 			ft_putstr("\n");
 			while (!step_colony(board->ants, board))
-			{
-				// printf("!!!!!!\n");
-				sleep(1);
 				ft_putstr("\n");
-			}
 			ft_putstr("\n");
 		}
 	}
@@ -34,7 +40,7 @@ static int	process(t_board *board)
 	return (error);
 }
 
-static void print_error(int error)
+static void	print_error(int error)
 {
 	if (error == 1)
 		ft_putendl(RED "ERROR : ants not found" RESET);

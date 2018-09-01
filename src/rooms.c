@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rooms.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: achepurn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/01 13:54:07 by achepurn          #+#    #+#             */
+/*   Updated: 2018/09/01 13:54:09 by achepurn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../lem_in.h"
 
 t_room		*new_room(char *name, int x, int y)
@@ -54,7 +66,7 @@ t_list		*obj_in_lst(void *obj)
 	return (lst);
 }
 
-t_board *new_board(void)
+t_board		*new_board(void)
 {
 	t_board *res;
 
@@ -69,7 +81,7 @@ t_board *new_board(void)
 	return (res);
 }
 
-void	clear_board(t_board **board)
+void		clear_board(t_board **board)
 {
 	ft_lstdel(&(*board)->rooms, &clear_room);
 	ft_lstdel(&(*board)->ants, &clear_ant);
@@ -82,46 +94,46 @@ void	clear_board(t_board **board)
 //
 //
 
-void print_room(t_room *room)
-{
-	printf("//////\n%s %i %i\n", room->name, room->x, room->y);
-	if (room->status == R_START)
-		printf("start\n");
-	else if (room->status == R_END)
-		printf("end\n");
-	//else printf("status %i\n", room->status);
-	printf("order %i\n", room->order);
-	printf("is lock ? %i\n", room->lock);
-	printf("connections: ");
-	t_list *lst = room->connect;
-	while (lst)
-	{
-		t_room *r = lst->content;
-		printf("%s, ", r->name);
-		lst = lst->next;
-	}
-	lst = room->commited;
-	printf("commited: ");
-	while (lst)
-	{
-		t_room *r = lst->content;
-		if (r)
-			printf("%s(%zi), ",r->name, lst->content_size);
-		lst = lst->next;
-	}
-	printf("\n");
-}
+// void print_room(t_room *room)
+// {
+// 	printf("//////\n%s %i %i\n", room->name, room->x, room->y);
+// 	if (room->status == R_START)
+// 		printf("start\n");
+// 	else if (room->status == R_END)
+// 		printf("end\n");
+// 	//else printf("status %i\n", room->status);
+// 	printf("order %i\n", room->order);
+// 	printf("is lock ? %i\n", room->lock);
+// 	printf("connections: ");
+// 	t_list *lst = room->connect;
+// 	while (lst)
+// 	{
+// 		t_room *r = lst->content;
+// 		printf("%s, ", r->name);
+// 		lst = lst->next;
+// 	}
+// 	lst = room->commited;
+// 	printf("commited: ");
+// 	while (lst)
+// 	{
+// 		t_room *r = lst->content;
+// 		if (r)
+// 			printf("%s(%zi), ",r->name, lst->content_size);
+// 		lst = lst->next;
+// 	}
+// 	printf("\n");
+// }
 
-void print_rooms(t_list *rooms)
-{
-	t_room *room;
-	t_list *lst;
+// void print_rooms(t_list *rooms)
+// {
+// 	t_room *room;
+// 	t_list *lst;
 
-	lst = rooms;
-	while (lst)
-	{
-		room = lst->content;
-		print_room(room);
-		lst = lst->next;
-	}
-}
+// 	lst = rooms;
+// 	while (lst)
+// 	{
+// 		room = lst->content;
+// 		print_room(room);
+// 		lst = lst->next;
+// 	}
+// }

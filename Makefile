@@ -17,9 +17,11 @@ INCL = lem_in.h
 SRC_DIR = src/
 FILES = main.c \
 		input.c \
+		input2.c \
 		rooms.c \
 		scout.c \
 		ants.c \
+		ants2.c \
 		branch.c
 SRC = $(addprefix $(SRC_DIR), $(FILES))
 OBJ = $(SRC:.c=.o)
