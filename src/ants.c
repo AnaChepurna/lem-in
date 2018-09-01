@@ -38,11 +38,11 @@ t_list			*get_colony(int num, t_room *start)
 	return (lst);
 }
 
-void			print_ant(t_ant *ant)
+void			print_ant(t_ant *ant, t_room *location)
 {
 	ft_putstr("L");
 	ft_putnbr(ant->number);
 	ft_putstr("-");
-	ft_putstr(ant->location->name);
+	ft_putstr(location->name);
 	ft_putstr(" ");
 }

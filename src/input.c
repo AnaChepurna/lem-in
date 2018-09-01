@@ -18,7 +18,13 @@ int				read_ants(int fd, t_board *board)
 	char	*src;
 	int		res;
 
-	get_next_line(fd, &src);
+	src = NULL;
+	while (read_comment(src))
+	{
+		print_and_free(src);
+		if (get_next_line(fd, &src) < 0)
+			exit(1);
+	}
 	str = src;
 	res = ft_atoi(str);
 	while (ft_isdigit(*str))
@@ -34,6 +40,8 @@ int				read_ants(int fd, t_board *board)
 
 int				read_comment(char *str)
 {
+	if (!str)
+		return (4);
 	if (ft_strequ("##start", str))
 		return (R_START);
 	if (ft_strequ("##end", str))

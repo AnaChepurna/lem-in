@@ -61,7 +61,7 @@ void				clear_board(t_board **board);
 int					step_colony(t_list *lst, t_board *board);
 t_list				*get_colony(int num, t_room *start);
 void				clear_ant(void	*a, size_t size);
-void				print_ant(t_ant *ant);
+void				print_ant(t_ant *ant, t_room *location);
 
 /*
 **scout.c
@@ -82,6 +82,7 @@ t_room				*parse_room(char *str, int comment);
 void				mark_roads(t_room *end);
 void				print_room(t_room *room);
 void				print_rooms(t_list *start);
+void				print_and_free(char *str);
 
 /*
 **branch.c

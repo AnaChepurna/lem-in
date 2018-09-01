@@ -85,7 +85,7 @@ static int		step_ant(t_ant *ant, t_board *board)
 	if (ant->location->status == R_END)
 		return (1);
 	if (start_ant(ant, board) && ant->location->status != R_START)
-		print_ant(ant);
+		print_ant(ant, ant->location);
 	else
 		return (-1);
 	if (ant->location->status == R_END)

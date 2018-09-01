@@ -12,8 +12,10 @@
 
 #include "../lem_in.h"
 
-static void		print_and_free(char *str)
+void			print_and_free(char *str)
 {
+	if (!str)
+		return ;
 	ft_putendl(str);
 	free(str);
 }
