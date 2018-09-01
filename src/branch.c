@@ -2,8 +2,10 @@
 
 int	is_commited(t_room *road, t_room *room)
 {
-	t_list *lst;
+	t_list	*lst;
 
+	if (!road)
+		return (0);
 	lst = room->commited;
 	while (lst)
 	{
@@ -16,7 +18,7 @@ int	is_commited(t_room *road, t_room *room)
 
 void	add_commit(unsigned int status, t_room *road, t_room *room)
 {
-	t_list *new;
+	t_list	*new;
 
 	if (is_commited(road, room))
 		return ;
@@ -26,36 +28,10 @@ void	add_commit(unsigned int status, t_room *road, t_room *room)
 	ft_lstaddend(&room->commited, new);
 }
 
-// void	delete_commit(unsigned int status, t_room *room)
-// {
-// 	t_list *lst;
-// 	t_list *lst1;
-
-// 	if (room->commited->content_size == status)
-// 	{
-// 		lst = room->commited->next;
-// 		free(room->commited);
-// 		room->commited = lst;
-// 		return ;
-// 	}
-// 	lst = room->commited;
-// 	while (lst)
-// 	{
-// 		lst1 = lst->next;
-// 		if (lst1->content_size == status)
-// 		{
-// 			lst->next = lst1->next;
-// 			free(lst1);
-// 			return ;
-// 		}
-// 		lst = lst->next;
-// 	}
-// }
-
 static void refresh_commits(t_room *road, t_room *flag)
 {
-	t_list *lst;
-	t_list *lst1;
+	t_list	*lst;
+	t_list	*lst1;
 
 	lst = road->commited;
 	while(lst)
@@ -70,22 +46,22 @@ static void refresh_commits(t_room *road, t_room *flag)
 
 void	clear_commits(t_room *room, t_room *flag)
 {
-	t_list *lst;
-	t_room *r;
-	t_room *road;
+	t_list	*lst;
+	t_room	*r;
+	t_room	*road;
 	int		roads;
 
 	roads = 0;
+	if (!room->commited)
+		return ;
 	lst = room->connect;
 	while (lst)
 	{
 		r = lst->content;
-		if (r->status == R_START)
-			return ;
 		if (r->status == R_END)
 			refresh_commits(room, flag);
-		if (r->order < room->order &&
-		r->status != R_END && is_commited(flag, r))
+		else if (r->status != R_START && r->order < room->order
+			&& is_commited(flag, r))
 		{
 			roads++;
 			road = r;
@@ -95,4 +71,33 @@ void	clear_commits(t_room *room, t_room *flag)
 	}
 	if (roads == 1)
 		refresh_commits(road, flag);
+}
+
+void	clear_unconnected(t_room *room, t_room *flag)
+{
+	t_list	*lst;
+	t_list	*lst1;
+	t_room	*r;
+	int		commited;
+
+	commited = 0;
+	lst = room->connect;
+	while (lst)
+	{
+		r = lst->content;
+		if (r && r->status != R_END && r->order < room->order && is_commited(flag, r))
+		{
+			if (commited++)
+			{
+				lst1 = r->commited;
+				while (lst1)
+				{
+					if (lst1->content == flag)
+						lst1->content = NULL;
+					lst1 = lst1->next;
+				}
+			}
+		}
+		lst = lst->next;
+	}
 }

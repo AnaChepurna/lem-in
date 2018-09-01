@@ -10,6 +10,7 @@ t_room		*new_room(char *name, int x, int y)
 		room->y = y;
 		room->x = x;
 		room->connect = NULL;
+		room->commited = NULL;
 		room->status = 0;
 		room->order = -1;
 		room->lock = 0;
@@ -104,7 +105,8 @@ void print_room(t_room *room)
 	while (lst)
 	{
 		t_room *r = lst->content;
-		printf("%s(%zi), ",r->name, lst->content_size);
+		if (r)
+			printf("%s(%zi), ",r->name, lst->content_size);
 		lst = lst->next;
 	}
 	printf("\n");

@@ -34,14 +34,14 @@ int scout_start_end(t_board *board)
 			board->start = room;
 		else if (room->status == R_START && board->start)
 		{
-			printf("ohhh\n");
+			//printf("ohhh\n");
 			return (6);
 		}
 		if (room->status == R_END && !board->end)
 			board->end = room;
 		else if (room->status == R_END && board->end)
 		{
-			printf("yoy\n");
+			//printf("yoy\n");
 			return (7);
 		}
 		lst = lst->next;	
@@ -53,12 +53,14 @@ int scout_start_end(t_board *board)
 	return (0);
 }
 
-static void mark_road(t_room *road, t_room *flag, int status)
+//static 
+void mark_road(t_room *road, t_room *flag, int status)
 {
 	t_room *next;
 	t_list *lst;
 
 	//road->status = status;
+	//printf("add_commit %s to %s\n", flag->name, road->name);
 	add_commit(status, flag, road);
 	if (road->status == R_START)
 			return ;
@@ -114,6 +116,14 @@ void		mark_roads(t_room *end)
 		room = lst->content;
 		//printf("%s to clear commits\n", room->name );
 		clear_commits(room, room);
+		lst = lst->next;
+	}
+	lst = end->connect;
+	while (lst)
+	{
+		room = lst->content;
+		printf("%s to clear clear_unconnected\n", room->name );
+		clear_unconnected(room, room);
 		lst = lst->next;
 	}
 }

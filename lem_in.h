@@ -78,5 +78,6 @@ void				print_rooms(t_list *start);
 void	add_commit(unsigned int status, t_room *road, t_room *room);
 int	is_commited(t_room *road, t_room *room);
 void	clear_commits(t_room *room, t_room *flag);
+void	clear_unconnected(t_room *room, t_room *flag);
 
 #endif
