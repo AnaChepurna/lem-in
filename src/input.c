@@ -31,7 +31,7 @@ int				read_ants(int fd, t_board *board)
 		str++;
 	if (*str)
 		res = 0;
-	else
+	else if (str != src)
 		ft_putendl(src);
 	board->num = res;
 	free(src);
