@@ -20,16 +20,17 @@ static int	process(t_board *board)
 	if (board)
 	{
 		if (!read_ants(0, board))
-			error = 1;
-		read_rooms(0, board);
+			return (1);
+		if (!read_rooms(0, board))
+			return (2);
 		if (!(error = scout_start_end(board)))
 		{
 			number_rooms(board->start);
 			mark_roads(board->end);
 			board->ants = get_colony(board->num, board->start);
-			ft_putstr("\n");
 			if (!board->end->commited)
 				return (4);
+			ft_putstr("\n");
 			while (!step_colony(board->ants, board))
 				ft_putstr("\n");
 			ft_putstr("\n");
@@ -44,6 +45,8 @@ static void	print_error(int error)
 {
 	if (error == 1)
 		ft_putendl(RED "ERROR : ants not found" RESET);
+	else if (error == 2)
+		ft_putendl(RED "ERROR : rooms not found" RESET);
 	else if (error == 3)
 		ft_putendl(YELLOW "\nWARNING! start and end is connected" RESET);
 	else if (error == 5)
@@ -83,7 +86,7 @@ static int	start_connect_end(t_board *board)
 		{
 			ant = lst->content;
 			print_ant(ant, board->end);
-			lst = lst->next; 
+			lst = lst->next;
 		}
 	}
 	return (res);
@@ -104,4 +107,3 @@ int			main(int c, char **v)
 	clear_board(&board);
 	return (0);
 }
-

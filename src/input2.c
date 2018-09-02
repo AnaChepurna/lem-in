@@ -20,7 +20,7 @@ void			print_and_free(char *str)
 	free(str);
 }
 
-void			read_rooms(int fd, t_board *board)
+int				read_rooms(int fd, t_board *board)
 {
 	char	*str;
 	t_room	*room;
@@ -40,12 +40,13 @@ void			read_rooms(int fd, t_board *board)
 			get_next_line(fd, &str);
 		}
 		if (!(room = parse_room(str, comment[1])))
-			return ;
+			return (board->rooms ? 1 : 0);
 		ft_lstadd(&(board->rooms), obj_in_lst(room));
 		print_and_free(str);
 		str = NULL;
 	}
 	read_connections(fd, board, str);
+	return (board->rooms ? 1 : 0);
 }
 
 static t_room	*find_room(t_board *board, char *name)

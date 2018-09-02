@@ -75,7 +75,7 @@ int					scout_start_end(t_board *board);
 **input.c
 */
 void				read_connections(int fd, t_board *board, char *str);
-void				read_rooms(int fd, t_board *board);
+int					read_rooms(int fd, t_board *board);
 int					read_ants(int fd, t_board *board);
 int					read_comment(char *str);
 t_room				*parse_room(char *str, int comment);
