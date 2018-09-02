@@ -29,7 +29,7 @@ int				read_ants(int fd, t_board *board)
 	res = ft_atoi(str);
 	while (ft_isdigit(*str))
 		str++;
-	if (*str)
+	if (*str || res < 1)
 		res = 0;
 	else if (str != src)
 		ft_putendl(src);
